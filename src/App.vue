@@ -9,11 +9,13 @@
                 <div class="card">
                   <div class="card-header">Chatbox</div>
                   <div class="card-body">
-                    <dl v-for="(chat, id) in chats" :key="id">
-                      <dt>{{ chat.from }}</dt>
-                      <dd>{{ chat.message }}</dd>
-                    </dl>
-                    <hr />
+                    <div class="chat-body">
+                      <dl v-for="(chat, id) in chats" :key="id">
+                        <dt>{{ chat.from }}</dt>
+                        <dd>{{ chat.message }}</dd>
+                      </dl>
+                      <hr />
+                    </div>
 
                     <input
                       type="text"
@@ -56,6 +58,7 @@
 import {
   CHATS_QUERY,
   SEND_MESSAGE_MUTATION,
+  CONNECT_MUTATION,
   MESSAGE_SENT_SUBSCRIPTION
 } from "@/graphql";
 
@@ -82,8 +85,18 @@ export default {
     }
   },
   methods: {
-    enterChat() {
+    async enterChat() {
       this.entered = !!this.username != "";
+
+      if (this.entered) {
+        // connected
+        await this.$apollo.mutate({
+          mutation: CONNECT_MUTATION,
+          variables: {
+            from: this.username
+          }
+        });
+      }
     },
     async sendMessage() {
       const message = this.message;
@@ -109,5 +122,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.chat-body {
+  max-height: 300px;
+  overflow-y: scroll;
 }
 </style>

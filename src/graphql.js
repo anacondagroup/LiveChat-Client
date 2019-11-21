@@ -8,7 +8,7 @@ export const CHATS_QUERY = gql`
       message
     }
   }
-`;
+`
 
 export const SEND_MESSAGE_MUTATION = gql`
   mutation SendMessage($from: String!, $message: String!) {
@@ -21,7 +21,7 @@ export const SEND_MESSAGE_MUTATION = gql`
       message
     }
   }
-`;
+`
 
 export const MESSAGE_SENT_SUBSCRIPTION = gql`
   subscription MessageSent {
@@ -31,4 +31,15 @@ export const MESSAGE_SENT_SUBSCRIPTION = gql`
       message
     }
   }
-`;
+`
+
+export const CONNECT_MUTATION = gql`
+  mutation Connect($from: String!) {
+    connect(from: $from) {
+      id
+      from
+      message
+    }
+  }
+`
+
