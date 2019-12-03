@@ -32,14 +32,3 @@ export const MESSAGE_SENT_SUBSCRIPTION = gql`
     }
   }
 `
-
-export const CONNECT_MUTATION = gql`
-  mutation Connect($from: String!) {
-    connect(from: $from) {
-      id
-      from
-      message
-    }
-  }
-`
-

@@ -58,7 +58,6 @@
 import {
   CHATS_QUERY,
   SEND_MESSAGE_MUTATION,
-  CONNECT_MUTATION,
   MESSAGE_SENT_SUBSCRIPTION
 } from "@/graphql";
 
@@ -85,24 +84,25 @@ export default {
     }
   },
   methods: {
-    async enterChat() {
+    enterChat() {
       this.entered = !!this.username != "";
 
       if (this.entered) {
         // connected
-        await this.$apollo.mutate({
-          mutation: CONNECT_MUTATION,
+        this.$apollo.mutate({
+          mutation: SEND_MESSAGE_MUTATION,
           variables: {
-            from: this.username
+            from: this.username, 
+            message: `${this.username} connected`
           }
         });
       }
     },
-    async sendMessage() {
+    sendMessage() {
       const message = this.message;
       this.message = "";
 
-      await this.$apollo.mutate({
+      this.$apollo.mutate({
         mutation: SEND_MESSAGE_MUTATION,
         variables: {
           from: this.username,
