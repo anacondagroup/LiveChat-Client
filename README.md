@@ -1,4 +1,4 @@
-# frontend
+# LiveChat-Client
 
 ## Project setup
 ```
